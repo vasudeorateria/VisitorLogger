@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+
+        <TextView
+            android:id="@+id/visitor_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13 MArch 2021 , 1:43 PM"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/visitor_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="Visitor Name"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/call_visitor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/visitor_time" />
+
+        <ImageView
+            android:id="@+id/call_visitor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/visitor_contact"
+            app:layout_constraintEnd_toStartOf="@+id/visitor_contact"
+            app:layout_constraintTop_toTopOf="@+id/visitor_contact"
+            app:srcCompat="@drawable/call" />
+
+        <TextView
+            android:id="@+id/visitor_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9051259789"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/visitor_name" />
+
+        <TextView
+            android:id="@+id/purpose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/purpose_of_visit"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/visitor_purpose"
+            app:layout_constraintStart_toStartOf="@+id/concerned_person"
+            app:layout_constraintTop_toTopOf="@+id/visitor_purpose" />
+
+        <TextView
+            android:id="@+id/visitor_purpose"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:maxLines="2"
+            android:text="Sponsorship"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/visitor_concerned_person"
+            app:layout_constraintStart_toStartOf="@+id/visitor_concerned_person"
+            app:layout_constraintTop_toBottomOf="@+id/visitor_concerned_person" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/visitor_address"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/visitor_address"
+            app:layout_constraintStart_toStartOf="@+id/purpose"
+            app:layout_constraintTop_toTopOf="@+id/visitor_address" />
+
+        <TextView
+            android:id="@+id/visitor_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:maxLines="2"
+            android:text="AJ-300, 1st floor, Salt Lake City"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/visitor_purpose"
+            app:layout_constraintStart_toStartOf="@+id/visitor_purpose"
+            app:layout_constraintTop_toBottomOf="@+id/visitor_purpose" />
+
+        <TextView
+            android:id="@+id/concerned_person"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/concerned_person"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/visitor_concerned_person"
+            app:layout_constraintStart_toStartOf="@+id/visitor_name"
+            app:layout_constraintTop_toTopOf="@+id/visitor_concerned_person" />
+
+        <TextView
+            android:id="@+id/visitor_concerned_person"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:maxLines="2"
+            android:text="Vasudeo Rateria"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/visitor_contact"
+            app:layout_constraintStart_toEndOf="@+id/concerned_person"
+            app:layout_constraintTop_toBottomOf="@+id/visitor_contact" />
+
+        <TextView
+            android:id="@+id/vehicle_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/vehicle_number"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/visitor_vehicle_number"
+            app:layout_constraintStart_toStartOf="@+id/address"
+            app:layout_constraintTop_toTopOf="@+id/visitor_vehicle_number" />
+
+        <TextView
+            android:id="@+id/visitor_vehicle_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:maxLines="2"
+            android:text="WB 02B 4576 "
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/visitor_address"
+            app:layout_constraintStart_toStartOf="@+id/visitor_address"
+            app:layout_constraintTop_toBottomOf="@+id/visitor_address" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
