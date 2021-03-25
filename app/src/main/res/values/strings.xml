@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">VisitorLogger</string>
+    <string name="concerned_person">Concerned Person:</string>
+    <string name="purpose_of_visit">Purpose of Visit:</string>
+    <string name="visitor_address">Visitor Address:</string>
+    <string name="vehicle_number">Vehicle Number:</string>
+    <string name="add_new_visitor">Add New Visitor</string>
+    <string name="visitor_name">Visitor Name</string>
+    <string name="visitor_contact">Visitor Contact</string>
+    <string name="add_visitor">Add Visitor</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
 </resources>

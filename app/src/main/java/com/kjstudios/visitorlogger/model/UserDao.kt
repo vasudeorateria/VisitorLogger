@@ -1,21 +1,26 @@
 package com.kjstudios.visitorlogger.model
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
-interface VisitorDao {
+interface UserDao {
 
-    @Query("select * from visitors order by time asc")
-    fun getAllVisitors(): LiveData<List<Visitor>>
+    @Query("select * from users where  email= :email ")
+    suspend fun getUser(email: String): User?
 
-    @Query("select * from visitors where id = :visitorId ")
-    fun getVisitor(visitorId: Int): Visitor
+    @Query("select * from users where isLoggedIn = 1 and module=:module")
+    suspend fun getLoggedInUser(module:String): User?
+
+    @Update
+    suspend fun logInUser(user: User)
+
+    @Update
+    suspend fun logoutUser(user: User)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addVisitor(visitor: Visitor)
+    suspend fun addUser(user: User)
 
     @Delete
-    suspend fun deleteVisitor(visitor: Visitor)
+    suspend fun deleteUser(user: User)
 
 }

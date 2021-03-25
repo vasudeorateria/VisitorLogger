@@ -2,56 +2,78 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="8dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp">
 
-
         <TextView
-            android:id="@+id/visitor_time"
+            android:id="@+id/visitorTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="13 MArch 2021 , 1:43 PM"
+            tools:text="13 March 2021 , 1:43 PM"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/visitor_name"
+            android:id="@+id/visitorName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:text="Visitor Name"
+            tools:text="Visitor Name"
             android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/call_visitor"
+            app:layout_constraintEnd_toStartOf="@+id/callVisitor"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/visitor_time" />
+            app:layout_constraintTop_toBottomOf="@+id/visitorTime" />
 
         <ImageView
-            android:id="@+id/call_visitor"
+            android:id="@+id/callVisitor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/visitor_contact"
-            app:layout_constraintEnd_toStartOf="@+id/visitor_contact"
-            app:layout_constraintTop_toTopOf="@+id/visitor_contact"
+            app:layout_constraintBottom_toBottomOf="@+id/visitorContact"
+            app:layout_constraintEnd_toStartOf="@+id/visitorContact"
+            app:layout_constraintTop_toTopOf="@+id/visitorContact"
             app:srcCompat="@drawable/call" />
 
         <TextView
-            android:id="@+id/visitor_contact"
+            android:id="@+id/visitorContact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="9051259789"
+            tools:text="9051259789"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/visitor_name" />
+            app:layout_constraintTop_toTopOf="@+id/visitorName" />
+
+        <TextView
+            android:id="@+id/concernedPerson"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/concerned_person"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/visitorConcernedPerson"
+            app:layout_constraintStart_toStartOf="@+id/visitorName"
+            app:layout_constraintTop_toTopOf="@+id/visitorConcernedPerson" />
+
+        <TextView
+            android:id="@+id/visitorConcernedPerson"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:maxLines="2"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/visitorContact"
+            app:layout_constraintStart_toEndOf="@+id/concernedPerson"
+            app:layout_constraintTop_toBottomOf="@+id/visitorContact"
+            tools:text="Vasudeo Rateria" />
 
         <TextView
             android:id="@+id/purpose"
@@ -59,21 +81,21 @@
             android:layout_height="wrap_content"
             android:text="@string/purpose_of_visit"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/visitor_purpose"
-            app:layout_constraintStart_toStartOf="@+id/concerned_person"
-            app:layout_constraintTop_toTopOf="@+id/visitor_purpose" />
+            app:layout_constraintBottom_toBottomOf="@+id/visitorPurpose"
+            app:layout_constraintStart_toStartOf="@+id/concernedPerson"
+            app:layout_constraintTop_toTopOf="@+id/visitorPurpose" />
 
         <TextView
-            android:id="@+id/visitor_purpose"
+            android:id="@+id/visitorPurpose"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:maxLines="2"
-            android:text="Sponsorship"
+            tools:text="Sponsorship"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/visitor_concerned_person"
-            app:layout_constraintStart_toStartOf="@+id/visitor_concerned_person"
-            app:layout_constraintTop_toBottomOf="@+id/visitor_concerned_person" />
+            app:layout_constraintEnd_toEndOf="@+id/visitorConcernedPerson"
+            app:layout_constraintStart_toStartOf="@+id/visitorConcernedPerson"
+            app:layout_constraintTop_toBottomOf="@+id/visitorConcernedPerson" />
 
         <TextView
             android:id="@+id/address"
@@ -81,66 +103,43 @@
             android:layout_height="wrap_content"
             android:text="@string/visitor_address"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/visitor_address"
+            app:layout_constraintBottom_toBottomOf="@+id/visitorAddress"
             app:layout_constraintStart_toStartOf="@+id/purpose"
-            app:layout_constraintTop_toTopOf="@+id/visitor_address" />
+            app:layout_constraintTop_toTopOf="@+id/visitorAddress" />
 
         <TextView
-            android:id="@+id/visitor_address"
+            android:id="@+id/visitorAddress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:maxLines="2"
-            android:text="AJ-300, 1st floor, Salt Lake City"
+            tools:text="AJ-300, 1st floor, Salt Lake City"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/visitor_purpose"
-            app:layout_constraintStart_toStartOf="@+id/visitor_purpose"
-            app:layout_constraintTop_toBottomOf="@+id/visitor_purpose" />
+            app:layout_constraintEnd_toEndOf="@+id/visitorPurpose"
+            app:layout_constraintStart_toStartOf="@+id/visitorPurpose"
+            app:layout_constraintTop_toBottomOf="@+id/visitorPurpose" />
 
         <TextView
-            android:id="@+id/concerned_person"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/concerned_person"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/visitor_concerned_person"
-            app:layout_constraintStart_toStartOf="@+id/visitor_name"
-            app:layout_constraintTop_toTopOf="@+id/visitor_concerned_person" />
-
-        <TextView
-            android:id="@+id/visitor_concerned_person"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:maxLines="2"
-            android:text="Vasudeo Rateria"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/visitor_contact"
-            app:layout_constraintStart_toEndOf="@+id/concerned_person"
-            app:layout_constraintTop_toBottomOf="@+id/visitor_contact" />
-
-        <TextView
-            android:id="@+id/vehicle_number"
+            android:id="@+id/vehicleNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/vehicle_number"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/visitor_vehicle_number"
+            app:layout_constraintBottom_toBottomOf="@+id/visitorVehicleNumber"
             app:layout_constraintStart_toStartOf="@+id/address"
-            app:layout_constraintTop_toTopOf="@+id/visitor_vehicle_number" />
+            app:layout_constraintTop_toTopOf="@+id/visitorVehicleNumber" />
 
         <TextView
-            android:id="@+id/visitor_vehicle_number"
+            android:id="@+id/visitorVehicleNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:maxLines="2"
-            android:text="WB 02B 4576 "
+            tools:text="WB 02B 4576 "
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/visitor_address"
-            app:layout_constraintStart_toStartOf="@+id/visitor_address"
-            app:layout_constraintTop_toBottomOf="@+id/visitor_address" />
+            app:layout_constraintEnd_toEndOf="@+id/visitorAddress"
+            app:layout_constraintStart_toStartOf="@+id/visitorAddress"
+            app:layout_constraintTop_toBottomOf="@+id/visitorAddress" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

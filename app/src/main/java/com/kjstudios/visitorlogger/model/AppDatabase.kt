@@ -5,27 +5,25 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Visitor::class], version = 1, exportSchema = false)
-abstract class VisitorDatabase : RoomDatabase() {
+@Database(entities = [Visitor::class, User::class], version = 1, exportSchema = false)
+abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun visitorDao(): VisitorDao
+    abstract fun getVisitorDao(): VisitorDao
+    abstract fun getUserDao(): UserDao
 
     companion object {
 
         @Volatile
-        private var INSTANCE: VisitorDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getDatabase(context: Context): VisitorDatabase {
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
+        fun initialiseDatabase(context: Context):AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    VisitorDatabase::class.java,
-                    "visitor_database"
+                    AppDatabase::class.java,
+                    "app database"
                 ).build()
                 INSTANCE = instance
-                // return instance
                 instance
             }
         }

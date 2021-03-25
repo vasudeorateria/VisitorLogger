@@ -3,11 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kjstudios.AdminFragment">
+    android:background="@color/purple_700"
+    tools:context=".view.AdminFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/adminRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello Admin" />
+        android:layout_margin="16dp"
+        tools:listitem="@layout/visitor_item_layout" />
 
 </FrameLayout>

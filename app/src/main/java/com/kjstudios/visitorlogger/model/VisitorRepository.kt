@@ -1,9 +1,6 @@
-package com.kjstudios.visitorlogger
+package com.kjstudios.visitorlogger.model
 
-import androidx.lifecycle.LiveData
-import kotlinx.coroutines.flow.Flow
-
-class VisitorRepository(private val visitorDao:VisitorDao) {
+class VisitorRepository(private val visitorDao: VisitorDao) {
 
     val allVisitors = visitorDao.getAllVisitors()
 

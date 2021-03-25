@@ -1,11 +1,11 @@
-package com.kjstudios.visitorlogger
+package com.kjstudios.visitorlogger.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "visitors")
-class Visitor(
+data class Visitor(
     val time : String,
     val name: String,
     val contact: String,

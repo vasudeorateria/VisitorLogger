@@ -1,71 +1,89 @@
 package com.kjstudios.visitorlogger.view
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.textfield.TextInputEditText
-import com.kjstudios.visitorlogger.AdminViewModel
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kjstudios.visitorlogger.R
-import com.kjstudios.visitorlogger.Visitor
-import java.util.*
+import com.kjstudios.visitorlogger.viewmodel.AdminViewModel
+import kotlinx.coroutines.*
 
+class SecurityFragment : Fragment(R.layout.security_fragment) {
 
-class SecurityFragment : Fragment(R.layout.add_new_visitor) {
-
-    private lateinit var visitorName: TextInputEditText
-    private lateinit var visitorContact: TextInputEditText
-    private lateinit var visitorConcernedPerson: TextInputEditText
-    private lateinit var visitorPurpose: TextInputEditText
-    private lateinit var visitorAddress: TextInputEditText
-    private lateinit var visitorVehicleNumber: TextInputEditText
-    private lateinit var addVisitor: Button
     private lateinit var viewModel: AdminViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var addVisitor: FloatingActionButton
+    private val rvAdapter = VisitorRvAdapter(false)
+    private val module = "security"
+
+    private val navController: NavController by lazy {
+        findNavController()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(AdminViewModel::class.java)
+        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        visitorName = view.findViewById(R.id.newVisitorName)
-        visitorContact = view.findViewById(R.id.newVisitorContact)
-        visitorConcernedPerson = view.findViewById(R.id.newVisitorConcernedPerson)
-        visitorPurpose = view.findViewById(R.id.newVisitorPurpose)
-        visitorAddress = view.findViewById(R.id.newVisitorAddress)
-        visitorVehicleNumber = view.findViewById(R.id.newVisitorVehicleNumber)
+        CoroutineScope(Dispatchers.IO).launch {
+            val log = async { viewModel.getLoggedInUser(module) }.await()
+            if (log == null) {
+                withContext(Dispatchers.Main) {
+                    changeScreen()
+                }
+            }
+        }
+        recyclerView = view.findViewById(R.id.securityRecyclerView)
         addVisitor = view.findViewById(R.id.addVisitor)
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = rvAdapter
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.allVisitors.observe(viewLifecycleOwner) { it?.let { rvAdapter.submitList(it) } }
     }
 
     override fun onResume() {
         super.onResume()
         addVisitor.setOnClickListener {
-            if (checkInputs()) {
-                viewModel.addVisitor(
-                    Visitor(
-                        Date().time.toString(),
-                        visitorName.text.toString(),
-                        visitorContact.text.toString(),
-                        visitorConcernedPerson.text.toString(),
-                        visitorPurpose.text.toString(),
-                        visitorAddress.text.toString(),
-                        visitorVehicleNumber.text.toString()
-                    )
-                )
-                Toast.makeText(context, "insertiong item", Toast.LENGTH_SHORT).show()
-            }
+            AddVisitorFragment().show(
+                childFragmentManager,
+                "Add Visitor"
+            )
         }
     }
 
-    private fun checkInputs(): Boolean {
-        if (visitorName.text.isNullOrBlank() || visitorContact.text.isNullOrBlank() ||
-            visitorConcernedPerson.text.isNullOrBlank() || visitorPurpose.text.isNullOrBlank() ||
-            visitorAddress.text.isNullOrBlank() || visitorVehicleNumber.text.isNullOrBlank()
-        ) {
-            return false
-        }
-        return true
+    private fun changeScreen() {
+        val action = SecurityFragmentDirections.actionSecurityFragmentToLoginFragment(module)
+        navController.navigate(action)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.options_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.logout -> {
+                viewModel.logoutUser(module)
+                changeScreen()
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
 }

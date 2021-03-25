@@ -7,12 +7,27 @@
 
     <fragment
         android:id="@+id/adminFragment"
-        android:name="com.kjstudios.AdminFragment"
-        android:label="admin_fragment"
-        tools:layout="@layout/admin_fragment" />
+        android:name="com.kjstudios.visitorlogger.view.AdminFragment"
+        tools:layout="@layout/admin_fragment">
+        <action
+            android:id="@+id/action_adminFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/securityFragment"
-        android:name="com.kjstudios.SecurityFragment"
-        android:label="security_fragment"
-        tools:layout="@layout/security_fragment" />
+        android:name="com.kjstudios.visitorlogger.view.SecurityFragment"
+        tools:layout="@layout/security_fragment">
+        <action
+            android:id="@+id/action_securityFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.kjstudios.visitorlogger.view.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/login">
+        <argument
+            android:name="module"
+            app:argType="string" />
+    </fragment>
 </navigation>
