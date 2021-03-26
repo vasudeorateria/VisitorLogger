@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
 import com.kjstudios.visitorlogger.R
 import com.kjstudios.visitorlogger.model.Visitor
-import com.kjstudios.visitorlogger.viewmodel.AdminViewModel
+import com.kjstudios.visitorlogger.viewmodel.FragmentViewModel
 import java.util.*
 
 class AddVisitorFragment : DialogFragment() {
@@ -23,11 +23,11 @@ class AddVisitorFragment : DialogFragment() {
     private lateinit var visitorAddress: TextInputEditText
     private lateinit var visitorVehicleNumber: TextInputEditText
     private lateinit var addVisitor: Button
-    private lateinit var viewModel: AdminViewModel
+    private lateinit var viewModel: FragmentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AdminViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FragmentViewModel::class.java)
     }
 
     override fun onCreateView(

@@ -15,10 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.kjstudios.visitorlogger.R
-import com.kjstudios.visitorlogger.view.AdminFragmentDirections
-import com.kjstudios.visitorlogger.view.SwipeToDelete
-import com.kjstudios.visitorlogger.view.VisitorRvAdapter
-import com.kjstudios.visitorlogger.viewmodel.AdminViewModel
+import com.kjstudios.visitorlogger.viewmodel.FragmentViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -27,7 +24,7 @@ import kotlinx.coroutines.withContext
 
 class AdminFragment : Fragment(R.layout.admin_fragment) {
 
-    private lateinit var viewModel: AdminViewModel
+    private lateinit var viewModel: FragmentViewModel
     private lateinit var recyclerView: RecyclerView
     private val rvAdapter = VisitorRvAdapter(true)
     private val module = "admin"
@@ -38,17 +35,19 @@ class AdminFragment : Fragment(R.layout.admin_fragment) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AdminViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FragmentViewModel::class.java)
         setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         lifecycleScope.launch(Dispatchers.IO) {
-            val log = async { viewModel.getLoggedInUser(module) }.await()
+            val log = withContext(Dispatchers.IO) {
+                viewModel.getLoggedInUser(module)
+            }
             if (log == null) {
                 withContext(Dispatchers.Main) {
-                    changeScreen()
+                    navigateToLogin()
                 }
             }
         }
@@ -82,7 +81,7 @@ class AdminFragment : Fragment(R.layout.admin_fragment) {
         }).attachToRecyclerView(recyclerView)
     }
 
-    private fun changeScreen() {
+    private fun navigateToLogin() {
         val action = AdminFragmentDirections.actionAdminFragmentToLoginFragment(module)
         navController.navigate(action)
     }
@@ -95,7 +94,7 @@ class AdminFragment : Fragment(R.layout.admin_fragment) {
         return when (item.itemId) {
             R.id.logout -> {
                 viewModel.logoutUser(module)
-                changeScreen()
+                navigateToLogin()
                 true
             }
             else -> return super.onOptionsItemSelected(item)

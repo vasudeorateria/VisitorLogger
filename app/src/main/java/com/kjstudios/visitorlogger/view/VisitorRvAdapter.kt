@@ -13,10 +13,9 @@ class VisitorRvAdapter(private val isAdminPanel: Boolean) :
     ListAdapter<Visitor, VisitorRvAdapter.AdapterViewHolder>(DIFF_UTIL_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
-        val viewHolder = AdapterViewHolder(
+        return AdapterViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.visitor_item_layout, parent, false)
         )
-        return viewHolder
     }
 
     override fun onBindViewHolder(holder: AdapterViewHolder, position: Int) {

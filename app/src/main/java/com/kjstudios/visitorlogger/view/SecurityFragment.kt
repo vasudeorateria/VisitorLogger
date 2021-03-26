@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kjstudios.visitorlogger.R
-import com.kjstudios.visitorlogger.viewmodel.AdminViewModel
+import com.kjstudios.visitorlogger.viewmodel.FragmentViewModel
 import kotlinx.coroutines.*
 
 class SecurityFragment : Fragment(R.layout.security_fragment) {
 
-    private lateinit var viewModel: AdminViewModel
+    private lateinit var viewModel: FragmentViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var addVisitor: FloatingActionButton
     private val rvAdapter = VisitorRvAdapter(false)
@@ -30,7 +30,7 @@ class SecurityFragment : Fragment(R.layout.security_fragment) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AdminViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FragmentViewModel::class.java)
         setHasOptionsMenu(true)
     }
 
@@ -39,7 +39,7 @@ class SecurityFragment : Fragment(R.layout.security_fragment) {
             val log = async { viewModel.getLoggedInUser(module) }.await()
             if (log == null) {
                 withContext(Dispatchers.Main) {
-                    changeScreen()
+                    navigateToLogin()
                 }
             }
         }
@@ -66,7 +66,7 @@ class SecurityFragment : Fragment(R.layout.security_fragment) {
         }
     }
 
-    private fun changeScreen() {
+    private fun navigateToLogin() {
         val action = SecurityFragmentDirections.actionSecurityFragmentToLoginFragment(module)
         navController.navigate(action)
     }
@@ -79,7 +79,7 @@ class SecurityFragment : Fragment(R.layout.security_fragment) {
         return when (item.itemId) {
             R.id.logout -> {
                 viewModel.logoutUser(module)
-                changeScreen()
+                navigateToLogin()
                 true
             }
             else -> return super.onOptionsItemSelected(item)

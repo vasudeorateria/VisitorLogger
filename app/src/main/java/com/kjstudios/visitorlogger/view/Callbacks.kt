@@ -2,7 +2,6 @@ package com.kjstudios.visitorlogger.view
 
 import android.graphics.Canvas
 import android.graphics.Color
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
