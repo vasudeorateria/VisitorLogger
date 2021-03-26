@@ -6,10 +6,13 @@ import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavAction
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputEditText
@@ -33,11 +36,6 @@ class LoginFragment : Fragment(R.layout.login) {
     private lateinit var password: TextInputEditText
     private lateinit var login: Button
 
-    private val module by lazy {
-        val args: LoginFragmentArgs by navArgs()
-        args.module
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(FragmentViewModel::class.java)
@@ -49,15 +47,38 @@ class LoginFragment : Fragment(R.layout.login) {
         login = view.findViewById(R.id.login)
     }
 
+    override fun onStart() {
+        super.onStart()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val loggedInUser = viewModel.getLoggedInUser()
+            if (loggedInUser != null) {
+                withContext(Dispatchers.Main) {
+                    if (loggedInUser.module == "admin") {
+                        navController.navigate(LoginFragmentDirections.actionLoginFragmentToAdminFragment())
+                    } else {
+                        navController.navigate(LoginFragmentDirections.actionLoginFragmentToSecurityFragment())
+                    }
+                }
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         login.setOnClickListener {
             hideKeyboard(login)
             if (checkInputs()) {
                 lifecycleScope.launch(Dispatchers.IO) {
-                    viewModel.loginUser(User(email.text.toString(), password.text.toString(), module, -1))
+                    val userModule = withContext(Dispatchers.IO) {
+                        viewModel.loginUser(email.text.toString(), password.text.toString())
+                    }
                     withContext(Dispatchers.Main) {
-                        navController.popBackStack()
+                        when (userModule) {
+                            "admin" -> navController.navigate(LoginFragmentDirections.actionLoginFragmentToAdminFragment())
+                            "security" -> navController.navigate(LoginFragmentDirections.actionLoginFragmentToSecurityFragment())
+                            else -> Toast.makeText(context, "Unable to login", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     }
                 }
             }
@@ -65,7 +86,8 @@ class LoginFragment : Fragment(R.layout.login) {
     }
 
     private fun hideKeyboard(view: View) {
-        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 

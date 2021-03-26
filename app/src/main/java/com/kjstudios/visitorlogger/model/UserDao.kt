@@ -5,11 +5,11 @@ import androidx.room.*
 @Dao
 interface UserDao {
 
-    @Query("select * from users where  email= :email ")
-    suspend fun getUser(email: String): User?
+    @Query("select * from users where  email= :email and password=:password")
+    suspend fun getUser(email: String,password: String): User?
 
-    @Query("select * from users where isLoggedIn = 1 and module=:module")
-    suspend fun getLoggedInUser(module:String): User?
+    @Query("select * from users where isLoggedIn = 1")
+    suspend fun getLoggedInUser(): User?
 
     @Update
     suspend fun logInUser(user: User)

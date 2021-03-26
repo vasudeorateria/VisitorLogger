@@ -51,17 +51,17 @@ class FragmentViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    suspend fun getLoggedInUser(module: String): User? {
-        return userRepository.getLoggedInUser(module)
+    suspend fun getLoggedInUser(): User? {
+        return userRepository.getLoggedInUser()
     }
 
-    suspend fun loginUser(user: User) {
-        userRepository.logInUser(user)
+    suspend fun loginUser(email:String,password:String):String? {
+        return userRepository.logInUser(email,password)
     }
 
-    fun logoutUser(module: String) {
+    fun logoutUser() {
         viewModelScope.launch(Dispatchers.IO) {
-            userRepository.logoutUser(module)
+            userRepository.logoutUser()
         }
     }
 

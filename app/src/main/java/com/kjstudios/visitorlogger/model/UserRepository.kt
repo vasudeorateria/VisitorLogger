@@ -2,22 +2,23 @@ package com.kjstudios.visitorlogger.model
 
 class UserRepository(private val userDao: UserDao) {
 
-    suspend fun logInUser(user: User) {
-        val existingUser = userDao.getUser(user.email)
-        if (user == existingUser) {
-            user.isLoggedIn = 1
-            userDao.logInUser(user)
+    suspend fun logInUser(email: String, password: String): String? {
+        val existingUser = userDao.getUser(email, password)
+        if (existingUser != null) {
+            existingUser.isLoggedIn = 1
+            userDao.logoutUser(existingUser)
         }
+        return existingUser?.module
     }
 
-    suspend fun logoutUser(module: String) {
-        val lu = getLoggedInUser(module)
-        lu!!.isLoggedIn = -1
-        userDao.logoutUser(lu)
+    suspend fun logoutUser() {
+        val loggedInUser = getLoggedInUser()
+        loggedInUser!!.isLoggedIn = -1
+        userDao.logoutUser(loggedInUser)
     }
 
-    suspend fun getLoggedInUser(module: String): User? {
-        return userDao.getLoggedInUser(module)
+    suspend fun getLoggedInUser(): User? {
+        return userDao.getLoggedInUser()
     }
 
     suspend fun addUser(user: User) {

@@ -24,10 +24,10 @@ import kotlinx.coroutines.withContext
 
 class AdminFragment : Fragment(R.layout.admin_fragment) {
 
+
     private lateinit var viewModel: FragmentViewModel
     private lateinit var recyclerView: RecyclerView
     private val rvAdapter = VisitorRvAdapter(true)
-    private val module = "admin"
 
     private val navController: NavController by lazy {
         findNavController()
@@ -40,17 +40,6 @@ class AdminFragment : Fragment(R.layout.admin_fragment) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        lifecycleScope.launch(Dispatchers.IO) {
-            val log = withContext(Dispatchers.IO) {
-                viewModel.getLoggedInUser(module)
-            }
-            if (log == null) {
-                withContext(Dispatchers.Main) {
-                    navigateToLogin()
-                }
-            }
-        }
         recyclerView = view.findViewById(R.id.adminRecyclerView)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -81,11 +70,6 @@ class AdminFragment : Fragment(R.layout.admin_fragment) {
         }).attachToRecyclerView(recyclerView)
     }
 
-    private fun navigateToLogin() {
-        val action = AdminFragmentDirections.actionAdminFragmentToLoginFragment(module)
-        navController.navigate(action)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.options_menu, menu)
     }
@@ -93,11 +77,13 @@ class AdminFragment : Fragment(R.layout.admin_fragment) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.logout -> {
-                viewModel.logoutUser(module)
-                navigateToLogin()
+                viewModel.logoutUser()
+                navController.navigateUp()
                 true
             }
             else -> return super.onOptionsItemSelected(item)
         }
     }
 }
+
+

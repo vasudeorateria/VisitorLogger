@@ -22,7 +22,6 @@ class SecurityFragment : Fragment(R.layout.security_fragment) {
     private lateinit var recyclerView: RecyclerView
     private lateinit var addVisitor: FloatingActionButton
     private val rvAdapter = VisitorRvAdapter(false)
-    private val module = "security"
 
     private val navController: NavController by lazy {
         findNavController()
@@ -35,14 +34,6 @@ class SecurityFragment : Fragment(R.layout.security_fragment) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val log = async { viewModel.getLoggedInUser(module) }.await()
-            if (log == null) {
-                withContext(Dispatchers.Main) {
-                    navigateToLogin()
-                }
-            }
-        }
         recyclerView = view.findViewById(R.id.securityRecyclerView)
         addVisitor = view.findViewById(R.id.addVisitor)
         recyclerView.apply {
@@ -66,11 +57,6 @@ class SecurityFragment : Fragment(R.layout.security_fragment) {
         }
     }
 
-    private fun navigateToLogin() {
-        val action = SecurityFragmentDirections.actionSecurityFragmentToLoginFragment(module)
-        navController.navigate(action)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.options_menu, menu)
     }
@@ -78,8 +64,8 @@ class SecurityFragment : Fragment(R.layout.security_fragment) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.logout -> {
-                viewModel.logoutUser(module)
-                navigateToLogin()
+                viewModel.logoutUser()
+                navController.navigateUp()
                 true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -87,3 +73,4 @@ class SecurityFragment : Fragment(R.layout.security_fragment) {
     }
 
 }
+

@@ -3,39 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/adminFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/adminFragment"
         android:name="com.kjstudios.visitorlogger.view.AdminFragment"
-        tools:layout="@layout/admin_fragment">
-        <action
-            android:id="@+id/action_adminFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:enterAnim="@anim/fragment_close_enter"
-            app:exitAnim="@anim/fragment_close_exit"
-            app:popEnterAnim="@anim/fragment_close_enter"
-            app:popExitAnim="@anim/fragment_close_exit" />
-    </fragment>
+        tools:layout="@layout/admin_fragment" />
     <fragment
         android:id="@+id/securityFragment"
         android:name="com.kjstudios.visitorlogger.view.SecurityFragment"
-        tools:layout="@layout/security_fragment">
-        <action
-            android:id="@+id/action_securityFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:enterAnim="@anim/fragment_close_enter"
-            app:exitAnim="@anim/fragment_close_exit"
-            app:popEnterAnim="@anim/fragment_close_enter"
-            app:popExitAnim="@anim/fragment_close_exit" />
-    </fragment>
+        tools:layout="@layout/security_fragment" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.kjstudios.visitorlogger.view.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/login">
-        <argument
-            android:name="module"
-            app:argType="string" />
+        <action
+            android:id="@+id/action_loginFragment_to_securityFragment"
+            app:destination="@id/securityFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_adminFragment"
+            app:destination="@id/adminFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
